@@ -1,6 +1,6 @@
 from django.urls import path,include
 from user.views import index
-from .views import CustomUserCreate,Bookall,BlacklistTokenView
+from .views import CustomUserCreate,LoginView,Bookall,BlacklistTokenView
 from rest_framework import routers
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
@@ -18,6 +18,8 @@ urlpatterns = [
     path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     # path('books/',BookList.as_view(),name="Books"),
     path('register/',CustomUserCreate.as_view(),name="create_user"),
+    path('login/',LoginView.as_view(),name="login"),
+    # path('logout/')
     path('logout/blacklist',BlacklistTokenView.as_view(),name='blacklist')  
 ]
 

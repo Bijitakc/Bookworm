@@ -2,10 +2,14 @@ from django.shortcuts import render
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from django.shortcuts import get_object_or_404
+from django.contrib.auth import get_user_model
 from rest_framework import permissions,generics,routers,status,viewsets
-from .serializers import BookSerializer,RegisterUserSerializer
-from rest_framework_simplejwt.tokens import RefreshToken
+from .serializers import BookSerializer,RegisterUserSerializer,LoginSerializer
+from rest_framework_simplejwt.tokens import AccessToken,RefreshToken
 from .models import Book
+import jwt,datetime
+
+User=get_user_model()
 
 class CustomUserCreate(APIView):
     permission_classes=[permissions.AllowAny]
@@ -44,6 +48,21 @@ class  BlacklistTokenView(APIView):
             token.blacklist()
         except Exception as e:
             return Response(status=status.HTTP_400_BAD_REQUEST)
+
+
+class LoginView(APIView):
+    serializer_class=LoginSerializer
+
+    def post(self,request):
+        loginRSerializer=LoginSerializer(data=request.data)
+        #checks the validation in serialiizer
+        if loginRSerializer.is_valid():
+            accesstoken=AccessToken.for_user(loginRSerializer.validated_user)
+            print("this")
+            print(loginRSerializer.validated_user)
+            return Response({"access_token":str(accesstoken)})
+        else:
+            return Response(loginRSerializer.errors,status=status.HTTP_400_BAD_REQUEST)
 
 
 # class Bookall(viewsets.ViewSet):
