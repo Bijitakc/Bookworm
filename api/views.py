@@ -4,23 +4,18 @@ from rest_framework.response import Response
 from django.shortcuts import get_object_or_404
 from django.contrib.auth import get_user_model
 from rest_framework import permissions,generics,routers,status,viewsets
-from .serializers import BookSerializer,RegisterUserSerializer,LoginSerializer
+from .serializers import BookSerializer,RegisterUserSerializer,LoginSerializer,UserChangePasswordSerializer
 from rest_framework_simplejwt.tokens import AccessToken,RefreshToken
 from .models import Book
 import jwt,datetime
 
 User=get_user_model()
 
-class CustomUserCreate(APIView):
+class CustomUserCreate(generics.CreateAPIView):
+    queryset=User.objects.all()
+    serializer_class=RegisterUserSerializer
     permission_classes=[permissions.AllowAny]
 
-    def post(Self,request):
-        reg_serializer=RegisterUserSerializer(data=request.data)
-        if reg_serializer.is_valid():
-            newuser=reg_serializer.save()
-            if newuser:
-                return Response(status=status.HTTP_201_CREATED)
-        return Response(reg_serializer.errors,status=status.HTTP_400_BAD_REQUEST)
 
 #can be overrided
 class Bookall(viewsets.ModelViewSet):
@@ -63,6 +58,13 @@ class LoginView(APIView):
             return Response({"access_token":str(accesstoken)})
         else:
             return Response(loginRSerializer.errors,status=status.HTTP_400_BAD_REQUEST)
+
+# class UserChangePassword(APIView):
+#     serializers_class=UserChangePasswordSerializer
+#     permission_classes=[permissions.AllowAny]
+
+#     def post(self,request):
+#         user
 
 
 # class Bookall(viewsets.ViewSet):
