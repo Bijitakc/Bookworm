@@ -52,7 +52,7 @@ class LoginSerializer(serializers.Serializer):
             return attrs
 
 class UserChangePasswordSerializer(serializers.Serializer):
-    email=serializers.CharField(max_length=100,required=True)
+    # email=serializers.CharField(max_length=100,required=True)
     password=serializers.CharField(required=True)
     confirm_password=serializers.CharField(required=True)
     new_password=serializers.CharField(required=True)

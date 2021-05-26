@@ -59,12 +59,25 @@ class LoginView(APIView):
         else:
             return Response(loginRSerializer.errors,status=status.HTTP_400_BAD_REQUEST)
 
-# class UserChangePassword(APIView):
-#     serializers_class=UserChangePasswordSerializer
-#     permission_classes=[permissions.AllowAny]
+class UserChangePassword(APIView):
+    serializers_class=UserChangePasswordSerializer
+    permission_classes=[permissions.AllowAny]
 
-#     def post(self,request):
-#         user
+    def post(self,request):
+        userPasswordSerializer=UserChangePasswordSerializer(
+            data=request.data
+        )
+
+        if userPasswordSerializer.is_valid():
+            user=request.user
+            user.set_password(
+                userPasswordSerializer.validated_data['new_password']
+            )
+            user.save()
+            return Response({"message":"Successful"})
+        else:
+            return Response(userPasswordSerializer.errors,status=status.HTTP_400_BAD_REQUEST)
+
 
 
 # class Bookall(viewsets.ViewSet):
