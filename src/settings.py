@@ -42,7 +42,8 @@ INSTALLED_APPS = [
     'api',
     'rest_framework',
     'rest_framework.authtoken',
-    'rest_framework_simplejwt.token_blacklist'
+    'rest_framework_simplejwt.token_blacklist',
+    'drf_yasg'
 ]
 
 MIDDLEWARE = [
@@ -170,3 +171,5 @@ SIMPLE_JWT = {
     'SLIDING_TOKEN_LIFETIME': timedelta(minutes=5),
     'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=1),
 }
+
+REST_FRAMEWORK={'DEFAULT_SCHEMA_CLASS':'rest_framework.schemas.coreapi.AutoSchema'}
