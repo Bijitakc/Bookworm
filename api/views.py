@@ -1,7 +1,7 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from django.shortcuts import get_object_or_404
-from rest_framework import permissions,generics,routers,status,viewsets
+from rest_framework import permissions,generics,routers, serializers,status,viewsets
 from .serializers import BookSerializer
 from .models import Book
 import jwt,datetime
@@ -22,8 +22,7 @@ class Bookall(viewsets.ModelViewSet):
         queryset=Book.objects.all()
         return queryset
 
-
-
-
-
 # class updateprofile()
+class AllBooks(generics.ListAPIView):
+    queryset=Book.objects.all()
+    serializer_class=BookSerializer

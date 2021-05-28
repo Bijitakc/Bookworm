@@ -1,6 +1,6 @@
 from django.urls import path,include
 from user.views import index
-from .views import Bookall
+from .views import Bookall,AllBooks
 from .authviews import CustomUserCreate,LoginView,BlacklistTokenView,UserChangePassword
 from rest_framework import routers
 from rest_framework_simplejwt.views import (
@@ -23,7 +23,8 @@ authpatterns=[
 bookpatterns = [
     path('api-auth/', include('rest_framework.urls')),
     path('',include(router.urls)),    
-    # path('books/',BookList.as_view(),name="Books"),    
+    # path('books/',BookList.as_view(),name="Books"),  
+    path('allbooks/',AllBooks.as_view(),name="AllBooks"),  
     path('changepass/',UserChangePassword.as_view(),name="changepass")
    
 ]

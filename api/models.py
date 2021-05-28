@@ -11,9 +11,16 @@ class Book(models.Model):
     # slug=models.SlugField(max_length=250)
     #add genres
     GENRE_CHOICES=(
-        ('Horror',"Horror"),
+        ('Fantasy','Fantasy'),
         ('Thriller','Thriller'),
-        ('Romantic','Romantic')
+        ('Romance','Romance'),
+        ('Mystery','Mystery'),
+        ('Horror',"Horror"),
+        ('Fiction','Fiction'),
+        ('NonFiction','NonFiction'),
+        ('Comics','Comics'),
+        ('Science Fiction','Science Fiction'),
+        ('Young Adult','Young Adult'),
     )
     genre=models.CharField(max_length=20,choices=GENRE_CHOICES)
     CONDITION_CHOICES=(
